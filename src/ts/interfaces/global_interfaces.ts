@@ -1,5 +1,10 @@
 import { LogInValidation } from "../types/global_types";
 
+export interface Text {
+    name: string,
+    feature1: string,
+    feature2: string,
+}
 export interface Frameworks{
     id: number;
     name: string;
@@ -17,6 +22,12 @@ export interface SoccerPlayers{
 export interface Track {
     artist: string;
     song: string;
+}
+
+export interface SavedSong {
+    search: Track | null;
+    lyrics: string | null;
+    bio: any;
 }
 
 export interface Errors {

@@ -52,4 +52,4 @@ const ConceptsMenu = (): JSX.Element => {
   )
 }
 
-export default ConceptsMenu
+export default ConceptsMenu;

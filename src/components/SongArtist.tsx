@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SongArtist = ({artist}: any) => {
+const SongArtist = ({artist}: any): JSX.Element => {
   return (
     <section>
         <h3>{artist.strArtist}</h3>

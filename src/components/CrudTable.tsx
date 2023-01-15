@@ -1,7 +1,7 @@
-import {Frameworks} from '../ts/interfaces/global_interfaces'
+import {SoccerPlayers, Text} from '../ts/interfaces/global_interfaces'
 import CrudTableRow from "./CrudTableRow"
 
-const CrudTable = ({data, setDataToEdit, deleteData, text}: any) => {
+const CrudTable = ({data, setDataToEdit, deleteData, text}: {data: SoccerPlayers[] | null, setDataToEdit: React.Dispatch<React.SetStateAction<SoccerPlayers | null>>, deleteData: (id: number) => unknown, text: Text}) => {
     const {name, feature1, feature2} = text;
   return (
     <div>
@@ -16,7 +16,7 @@ const CrudTable = ({data, setDataToEdit, deleteData, text}: any) => {
                 </tr>
             </thead>
             <tbody>
-                {data.length > 0 ? data.map((el: Frameworks) => <CrudTableRow key={el.id} el={el} setDataToEdit={setDataToEdit} deleteData={deleteData}/>) : <tr><td colSpan={4}>Sin datos</td></tr>}
+                {data !== null && data!.length > 0 ? data!.map((el: SoccerPlayers) => <CrudTableRow key={el.id} el={el} setDataToEdit={setDataToEdit} deleteData={deleteData}/>) : <tr><td colSpan={4}>Sin datos</td></tr>}
             </tbody>
         </table>
     </div>

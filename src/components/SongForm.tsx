@@ -6,8 +6,9 @@ const initialForm: Track = {
     song: ''
 }
 
-const SongForm = ({handleSearch}: any) => {
+const SongForm = ({handleSearch, handleSaveSong}: {handleSearch: (data: Track)=>void, handleSaveSong: ()=>void}): JSX.Element => {
   const [form, setForm] = useState<Track>(initialForm);
+  const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setForm({
@@ -21,10 +22,12 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>): unknown => {
         
         if(!form.artist || !form.song){
             alert('Datos incompletos');
+            setIsDisabled(true);
             return;
         }
         handleSearch(form);
-        setForm(initialForm);   
+        setForm(initialForm);
+        setIsDisabled(false);   
 }
 
   return (
@@ -32,7 +35,8 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>): unknown => {
         <form onSubmit={handleSubmit}>
             <input type="text" name='artist' onChange={handleChange} placeholder='Nombre del intérprete' value={form.artist}/>
             <input type="text" name='song' onChange={handleChange} placeholder='Nombre de la canción' value={form.song}/>
-            <button type='submit'>Buscar</button>
+            <input type='submit' value="Enviar"/>
+            <input type="button" onClick={handleSaveSong} value="Agregar canción" disabled={isDisabled}/>
         </form>
     </div>
   )

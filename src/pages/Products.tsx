@@ -4,9 +4,9 @@ import { NavigateFunction, useLocation, useNavigate } from 'react-router-dom'
 const Products = () => {
   const LIMIT = 20;
   let {search} = useLocation(),
-        query: URLSearchParams = new URLSearchParams(search),
-        start:number = parseInt(query.get('inicio')!) || 1,
-        end:number = parseInt(query.get('fin')!) || LIMIT;
+    query: URLSearchParams = new URLSearchParams(search),
+    start:number = parseInt(query.get('inicio')!) || 1,
+    end:number = parseInt(query.get('fin')!) || LIMIT;
   
   let navigate: NavigateFunction = useNavigate();
   

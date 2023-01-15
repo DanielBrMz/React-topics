@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Message = ({msg, bgColor}: any) => {
+const Message = ({msg, bgColor}: {msg: string, bgColor: string}) => {
     let styles: object = {
         padding: "1rem",
         marginBottom: "1rem",

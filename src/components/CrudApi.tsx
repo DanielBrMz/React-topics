@@ -1,12 +1,13 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
 import { helpHttp } from '../helpers/helpHttp';
-import {SoccerPlayers} from '../ts/interfaces/global_interfaces';
+import {SoccerPlayers, Text} from '../ts/interfaces/global_interfaces';
 import CrudForm from './CrudForm';
 import CrudTable from './CrudTable';
 import Loader from './Loader';
 import Message from './Message';
-import { HashRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { HashRouter, NavLink, Route, Routes, Navigate } from 'react-router-dom';
+import Error404 from '../pages/Error404';
 
 const CrudApi = (): JSX.Element => {
   const [db, setDb] = useState<SoccerPlayers[] | null>(null);
@@ -14,7 +15,7 @@ const CrudApi = (): JSX.Element => {
   const [error, setError] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   
-  const text = {
+  const text: Text = {
     name: "Nombre",
     feature1: "Posición",
     feature2: "Equipo"
@@ -33,8 +34,8 @@ const CrudApi = (): JSX.Element => {
         } else {
             setDb(null);
             setError(res.err);
+            console.log(res.err);
         }
-
         setLoading(false);
     });  
   }, [url])
@@ -80,26 +81,28 @@ const CrudApi = (): JSX.Element => {
 
   return (
     <div>
-        <HashRouter basename='soccerplayers'>
+        <HashRouter>
           <h2>CRUD API con Rutas</h2>
           <header>
             <nav>
-              <NavLink to='/'>Jugadores de futbol</NavLink>
-              <NavLink to='/create'>Crear jugador</NavLink>
+              <NavLink to='soccerplayers/'>Jugadores de futbol</NavLink>
+              <NavLink to='soccerplayers/create'>Crear jugador</NavLink>
             </nav>
           </header>
           <Routes>
-            <Route path='/' element={<CrudTable data={db} setDataToEdit={setDataToEdit} deleteData={deleteData} text={text}/>}/>
-            <Route path='/create' element={<CrudForm createData={createData} updateData={updateData} dataToEdit={dataToEdit} setDataToEdit={setDataToEdit} text={text}/>}/>
-            <Route path='/editar/:id' element={<CrudForm createData={createData} updateData={updateData} dataToEdit={dataToEdit} setDataToEdit={setDataToEdit} text={text}/>}/>
+            <Route path='/soccerplayers'>
+              <Route path='/soccerplayers/' element={
+                <>
+                  {loading && <Loader/>}
+                  {error && <Message msg={`Error ${error.status}: ${error.statusText}`} bgColor={"#dc3545"}/>}
+                  {db && <CrudTable data={db} setDataToEdit={setDataToEdit} deleteData={deleteData} text={text}/>}
+                  </>}/>
+              <Route path='/soccerplayers/create' element={<CrudForm createData={createData} updateData={updateData} dataToEdit={dataToEdit} setDataToEdit={setDataToEdit} text={text}/>}/>
+              <Route path='/soccerplayers/edit/:id' element={<CrudForm createData={createData} updateData={updateData} dataToEdit={dataToEdit} setDataToEdit={setDataToEdit} text={text}/>}/>
+            </Route>
+            <Route path="*" element={<Error404/>} />
           </Routes>
-        </HashRouter>
-        <article className="grid-1-2">
-        <CrudForm createData={createData} updateData={updateData} dataToEdit={dataToEdit} setDataToEdit={setDataToEdit} text={text}/>
-        {loading && <Loader/>}
-        {error && <Message msg={`Error ${error.status}: ${error.statusText}`} bgColor={"#dc3545"}/>}
-        {db && <CrudTable data={db} setDataToEdit={setDataToEdit} deleteData={deleteData} text={text}/>}
-      </article>
+        </HashRouter>        
     </div>
   )
 }

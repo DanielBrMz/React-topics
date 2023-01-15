@@ -9,6 +9,10 @@ html{
 
 }
 
+form{
+  margin-bottom: 1rem;
+}
+
 hr{
   margin: 2rem auto;
 }
@@ -61,7 +65,7 @@ label{
   cursor: pointer;
 }
 
-button, input[type="submit"], input[type="reset"]{
+button, input[type="submit"], input[type="reset"], input[type="button"]{
   border: thin solid #444;
   border-radius: 0.35rem;
   padding: 0.5rem 1rem;
@@ -77,6 +81,13 @@ button, input[type="submit"], input[type="reset"]{
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
+}
+
+input[type="button"]:disabled{
+  border-color: rgba(118, 118, 118, .3);
+  color: rgba(16, 16, 16, .3);
+  background-color: rgba(238, 238, 238, .3);
+  cursor: not-allowed;
 }
 
 
